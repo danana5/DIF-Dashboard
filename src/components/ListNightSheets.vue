@@ -16,7 +16,7 @@
                         <v-list-item-title>{{sheet.date}}</v-list-item-title>
                         <v-list-item-subtitle>{{sheet.day}}</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-btn elevation="1" :to="`${sheet.id}`">View</v-btn>
+                    <v-btn elevation="1" :to="`/${sheet.id}`">View</v-btn>
                 </v-list-item>
             </v-list>
         </v-card>
