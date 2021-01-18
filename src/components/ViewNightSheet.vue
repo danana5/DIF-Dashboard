@@ -1,12 +1,37 @@
 <template>
-    <div id="view-night-sheet">
-        <ul class="collection with-header">
-            <li class="collection-header"><h4>{{sheet.date}}</h4></li>
-            <li class="collection-item">Day: {{sheet.day}}</li>
-            <li class="collection-item">Name: {{sheet.name}}</li>
-            <li class="collection-item">Notes: {{sheet.notes}}</li>
-        </ul>
-    </div>
+    <v-container>
+        <v-card
+        class="mx-auto"
+        max-width="1000"
+        tile
+        >
+            <v-card-title>
+                {{sheet.date}}
+            </v-card-title>
+            <v-card-subtitle>
+                {{sheet.day}}
+            </v-card-subtitle>
+            <v-card-text>
+                <strong>Name:</strong> {{sheet.name}}
+            </v-card-text>
+            <v-card-text>
+                <strong>Notes:</strong> {{sheet.notes}}
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                outlined
+                rounded
+                text
+                :to="`edit/${sheet.id}`"
+                >
+                    <v-icon left>
+                        mdi-pencil
+                    </v-icon>
+                    Edit
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
