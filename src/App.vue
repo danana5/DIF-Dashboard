@@ -4,7 +4,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
-            DIF Dash
+            DIF Dashboard
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -34,7 +34,7 @@
 
     <v-app-bar app color="blue darken-3">
       <v-app-bar-nav-icon color="white" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title><img src="./assets/logo.png" alt="DIF Logo" height="70%" width="70%"></v-toolbar-title>
+      <v-toolbar-title><router-link to="/"><img src="./assets/logo.png" alt="DIF Logo" height="70%" width="70%"></router-link></v-toolbar-title>
     </v-app-bar>
 
     <v-main>
