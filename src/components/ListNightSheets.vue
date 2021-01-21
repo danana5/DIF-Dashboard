@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-card
-        class="mx-auto"
+        class="mx-auto mt-10"
         max-width="800"
         tile
         >
