@@ -16,7 +16,12 @@
                         <v-list-item-title>{{sheet.date}}</v-list-item-title>
                         <v-list-item-subtitle>{{sheet.day}}</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-btn elevation="1" :to="`/${sheet.id}`">View</v-btn>
+                    <v-btn 
+                    class="white--text" 
+                    color="blue darken-3"
+                    outlined
+                    rounded
+                    :to="`/${sheet.id}`">View</v-btn>
                 </v-list-item>
             </v-list>
         </v-card>
@@ -33,7 +38,7 @@ export default {
         }
     },
     created () {
-        db.collection('night-sheets').get().then(querySnapshot => {
+        db.collection('night-sheets').orderBy("Date").limit(7).get().then(querySnapshot => {
             querySnapshot.forEach(doc =>{               
                 const data = {
                     'id': doc.id,
