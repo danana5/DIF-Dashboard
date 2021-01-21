@@ -49,7 +49,7 @@
                     clearable
                     >
                     </v-textarea>
-                    <v-divider inset></v-divider>
+                    <v-divider></v-divider>
                     <v-row>
                         <v-col>
                             <v-text-field
@@ -151,13 +151,12 @@ export default {
                 Day: this.day,
                 Notes: this.notes,
                 Card: this.card,
-                Total: this.total,
+                Cash: this.cash,
+                Total: this.card + this.cash,
                 Name: this.sheetName,
                 Tasks: this.tasks
-                }).then(doc => {
-                    this.$router.push(`/list`)
-                    console.log(doc.data())
                 })
+                this.$router.push(`/list`)
             }
         }
     }
