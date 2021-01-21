@@ -14,20 +14,51 @@
                 v-model="valid"
                 lazy-validation
                 >
+                    <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="date"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                        v-model="date"
+                        label="Date"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                    ></v-text-field>
+                    </template>
+                    <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                    >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="menu = false"
+                    >
+                        Cancel
+                    </v-btn>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu.save(date)"
+                    >
+                        OK
+                    </v-btn>
+                    </v-date-picker>
+                </v-menu>
                     <v-text-field
                     v-model="sheetName"
                     :rules="nameRules"
                     label="Name"
                     placeholder="Name"
-                    required
-                    clearable
-                    >
-                    </v-text-field>
-                    <v-text-field
-                    v-model="date"
-                    :rules="dateRules"
-                    label="Date"
-                    placeholder="DD/MM/YYYY"
                     required
                     clearable
                     >
@@ -115,12 +146,12 @@ export default {
     data () {
         return {
             valid: true,
-            date: null,
+            date: new Date().toISOString().substr(0, 10),
             sheetName: null,
             day: null,
             notes: null,
-            card: null,
-            cash: null,
+            card: 0,
+            cash: 0,
             total: null,
             tasks: false,
             nameRules: [
@@ -152,7 +183,7 @@ export default {
                 Notes: this.notes,
                 Card: this.card,
                 Cash: this.cash,
-                Total: this.card + this.cash,
+                Total: parseInt(this.cash) + parseInt(this.card),
                 Name: this.sheetName,
                 Tasks: this.tasks
                 })
