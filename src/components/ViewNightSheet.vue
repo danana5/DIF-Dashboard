@@ -15,21 +15,15 @@
                 <strong>Name:</strong> {{sheet.name}}
                 <br>
                 <strong>Notes:</strong> {{sheet.notes}}
+                <br><br>
+                <v-spacer></v-spacer>
+                <strong>Cash Recieved:</strong> €{{sheet.cash}}
+                <br>
+                <strong>Card Recieved:</strong> €{{sheet.card}}
+                <br>
+                <strong>Total Recieved:</strong> €{{sheet.total}}
             </v-card-text>
             <v-card-actions>
-                <v-btn
-                outlined
-                rounded
-                text
-                class="white--text" 
-                color="blue darken-3"
-                :to="`edit/${sheet.id}`"
-                >
-                    <v-icon left>
-                        mdi-pencil
-                    </v-icon>
-                    Edit
-                </v-btn>
                 <v-btn
                 outlined
                 rounded
@@ -42,6 +36,19 @@
                         mdi-file-remove-outline
                     </v-icon>
                     Delete
+                </v-btn>
+                <v-btn
+                outlined
+                rounded
+                text
+                class="white--text" 
+                color="blue darken-3"
+                :to="`edit/${sheet.id}`"
+                >
+                    <v-icon left>
+                        mdi-pencil
+                    </v-icon>
+                    Edit
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -93,7 +100,12 @@ export default {
                 name: '',
                 date: '',
                 day: '',
-                notes: ''
+                notes: '',
+                id: '',
+                card: 0,
+                cash: 0,
+                total: 0,
+                tasks: false,
             },
             dialog:false
         }
@@ -106,6 +118,11 @@ export default {
                 this.sheet.date = doc.data().Date
                 this.sheet.day = doc.data().Day
                 this.sheet.notes = doc.data().Notes
+                this.sheet.total = doc.data().Total
+                this.sheet.card = doc.data().Card
+                this.sheet.cash = doc.data().Cash
+                this.sheet.tasks = doc.data().Tasks
+                this.sheet.id = doc.id
         })
     },
     methods:{
@@ -113,7 +130,7 @@ export default {
             console.log("sheet deleted")
             const sheetID = this.$route.params.sheet_id
             db.collection('night-sheets').doc(sheetID).delete()
-            this.$router.push(`/list`)
+            this.$router.push("/list")
         }
     }
 } 
