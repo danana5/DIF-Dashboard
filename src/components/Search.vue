@@ -12,7 +12,7 @@
                         @click:append="submit"
                         @keyup.enter="submit"
                         label="Search By Date"
-                        placeholder="DD/MM/YYYY"
+                        placeholder="YYYY-MM-DD"
                         append-icon="mdi-magnify"
                         width="200"
                         ></v-text-field>
@@ -35,6 +35,14 @@
                 <strong>Name:</strong> {{resultSheet.name}}
                 <br>
                 <strong>Notes:</strong> {{resultSheet.notes}}
+                <br><br>
+                <v-spacer></v-spacer>
+                <strong>Cash Recieved:</strong> {{resultSheet.cash}}
+                <br>
+                <strong>Card Recieved:</strong> €{{resultSheet.card}}
+                <br>
+                <strong>Total Recieved:</strong> €{{resultSheet.total}}
+
             </v-card-text>
             <v-card-actions>
                 <v-btn
@@ -90,7 +98,10 @@ export default {
                     'name' : doc.data().Name,
                     'date' : doc.data().Date,
                     'day' : doc.data().Day,
-                    'notes' : doc.data().Notes
+                    'notes' : doc.data().Notes,
+                    'cash' : doc.data().Cash,
+                    'card' : doc.data().Card,
+                    'total' : doc.data().Total
                 }
                 this.nightSheets.push(data)
             })
