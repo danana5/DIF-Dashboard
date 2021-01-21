@@ -3,19 +3,50 @@
         <div class="searchBar">
                 <v-row>
                     <v-layout align-content-center style="max-width: 30%; margin: 0 auto; min-width: 300px">
+                        <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="query"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                        >
+                        <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        class="d-flex justify-center mt-10"
-                        outlined
+                        class="mt-10"
                         v-model="query"
-                        :counter="10"
-                        clearable
-                        @click:append="submit"
+                        label="Choose a date"
+                        append-outer-icon="mdi-magnify"
+                        readonly
+                        @click:append-outer="submit"
                         @keyup.enter="submit"
-                        label="Search By Date"
-                        placeholder="YYYY-MM-DD"
-                        append-icon="mdi-magnify"
-                        width="200"
+                        v-bind="attrs"
+                        v-on="on"
                         ></v-text-field>
+                        </template>
+                        <v-date-picker
+                        v-model="query"
+                        no-title
+                        scrollable
+                        >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="menu = false"
+                        >
+                            Cancel
+                        </v-btn>
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu.save(query)"
+                        >
+                            OK
+                        </v-btn>
+                        </v-date-picker>
+                    </v-menu>
                     </v-layout>
                 </v-row>
         </div>
@@ -37,7 +68,7 @@
                 <strong>Notes:</strong> {{resultSheet.notes}}
                 <br><br>
                 <v-spacer></v-spacer>
-                <strong>Cash Recieved:</strong> {{resultSheet.cash}}
+                <strong>Cash Recieved:</strong> €{{resultSheet.cash}}
                 <br>
                 <strong>Card Recieved:</strong> €{{resultSheet.card}}
                 <br>
@@ -86,6 +117,7 @@ export default {
             nightSheets : [],
             resultSheet : null,
             found : false,
+            menu : false,
             failed : false,
             searchedQuery: null
         }
