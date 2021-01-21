@@ -6,8 +6,11 @@
         tile
         >
             <v-card-title>
-                Edit Night Sheet
+                {{date}}
             </v-card-title>
+            <v-card-subtitle>
+                {{day}}
+            </v-card-subtitle>
             <v-container>
                 <v-form
                 ref="form"
@@ -19,24 +22,6 @@
                     :rules="nameRules"
                     label="Name"
                     placeholder="Name"
-                    required
-                    clearable
-                    >
-                    </v-text-field>
-                    <v-text-field
-                    v-model="date"
-                    :rules="dateRules"
-                    label="Date"
-                    placeholder="DD/MM/YYYY"
-                    required
-                    clearable
-                    >
-                    </v-text-field>
-                    <v-text-field
-                    v-model="day"
-                    :rules="dayRules"
-                    label="Day"
-                    placeholder="Day"
                     required
                     clearable
                     >
@@ -82,7 +67,7 @@
                     outlined
                     rounded
                     text
-                    :to="`/`"
+                    :to="`/list`"
                     >
                         Cancel
                     </v-btn>
@@ -114,8 +99,8 @@ export default {
             sheetName: null,
             day: null,
             notes: null,
-            card: null,
-            cash: null,
+            card: 0,
+            cash: 0,
             total: null,
             nameRules: [
                 v => !!v || 'Name is required',
@@ -157,7 +142,7 @@ export default {
                 Date: this.date,
                 Cash: this.cash,
                 Card: this.card,
-                Total: this.cash + this.card,
+                Total: parseInt(this.cash) + parseInt(this.card),
                 Notes: this.notes
             })
             this.$router.push(`/` + sheetID)
