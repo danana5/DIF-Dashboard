@@ -2,11 +2,9 @@
     <v-container>
         <div class="searchBar">
                 <v-row>
-                    <v-col>
-                    </v-col>
-                    <v-col>
+                    <v-layout align-content-center style="max-width: 30%; margin: 0 auto; min-width: 300px">
                         <v-text-field
-                        class="mt-10"
+                        class="d-flex justify-center mt-10"
                         outlined
                         v-model="query"
                         :counter="10"
@@ -18,13 +16,11 @@
                         append-icon="mdi-magnify"
                         width="200"
                         ></v-text-field>
-                    </v-col>
-                    <v-col>
-                    </v-col>
+                    </v-layout>
                 </v-row>
         </div>
         <v-card
-        class="mx-auto"
+        class="mx-auto mt-10"
         max-width="1000"
         tile
         v-if="found"
@@ -37,8 +33,7 @@
             </v-card-subtitle>
             <v-card-text>
                 <strong>Name:</strong> {{resultSheet.name}}
-            </v-card-text>
-            <v-card-text>
+                <br>
                 <strong>Notes:</strong> {{resultSheet.notes}}
             </v-card-text>
             <v-card-actions>
@@ -46,6 +41,8 @@
                 outlined
                 rounded
                 text
+                class="white--text" 
+                color="blue darken-3"
                 :to="`edit/${resultSheet.id}`"
                 >
                     <v-icon left>
@@ -53,9 +50,22 @@
                     </v-icon>
                     Edit
                 </v-btn>
+                <v-btn
+                outlined
+                rounded
+                text
+                class="white--text" 
+                color="red darken-3"
+                @click.stop="dialog = true"
+                >
+                    <v-icon left>
+                        mdi-file-remove-outline
+                    </v-icon>
+                    Delete
+                </v-btn>
             </v-card-actions>
         </v-card>
-        <h2 v-if="failed" style="text-align: center">No Sheet Exists on the date: {{query}}</h2>
+        <h2 v-if="failed" style="text-align: center">No Sheet Exists on the date: {{searchedQuery}}</h2>
     </v-container>
 </template>
 <script>
@@ -68,7 +78,8 @@ export default {
             nightSheets : [],
             resultSheet : null,
             found : false,
-            failed : false
+            failed : false,
+            searchedQuery: null
         }
     },
     created () {
@@ -88,6 +99,7 @@ export default {
     methods:{
         submit(){
             this.found=false
+            this.searchedQuery= this.query
             this.failed=false
             this.resultSheet = null
             for(let i = 0; i < this.nightSheets.length; i++){
@@ -105,9 +117,4 @@ export default {
     }
 } 
 </script>
-<style>
-.searchBar{
-    align-content: center;
-    display: flex;
-}
-</style>
+
