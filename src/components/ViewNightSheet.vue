@@ -51,7 +51,7 @@
         >
             <v-card>
                 <v-card-title class="headline">
-                Delete this Sheet?
+                Are You Sure?
                 </v-card-title>
 
                 <v-card-text>
@@ -73,7 +73,6 @@
                     color="red darken-3"
                     text
                     @click="deleteSheet"
-                    :to="`/list`"
                 >
                     Delete
                 </v-btn>
@@ -111,14 +110,10 @@ export default {
     },
     methods:{
         deleteSheet () {
-            if(confirm("Are you sure you want to delte this sheet?")){
-                const sheetID = this.$route.params.sheet_id
-
-                db.collection('night-sheets').doc(sheetID).get().then(doc => {                         
-                    // doc.ref.delete()
-                    console.log(doc.data())
-                })
-            }
+            console.log("sheet deleted")
+            const sheetID = this.$route.params.sheet_id
+            db.collection('night-sheets').doc(sheetID).delete()
+            this.$router.push(`/list`)
         }
     }
 } 
