@@ -154,12 +154,9 @@ export default {
             cash: 0,
             total: null,
             tasks: false,
+            menu: false,
             nameRules: [
                 v => !!v || 'Name is required',
-            ],
-            dateRules: [
-                v => !!v || 'Date is required',
-                v => (v && v.length <= 10) || 'Date must be entered in the form DD/MM/YYYY'
             ],
             cashRules: [
                 v => !!v || 'Cash Recieved is required',
