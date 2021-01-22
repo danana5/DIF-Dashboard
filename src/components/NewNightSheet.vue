@@ -4,6 +4,8 @@
         class="mx-auto mt-10"
         max-width="1000"
         tile
+        :disabled="loading"
+        :loading="loading"
         >
         <v-card-title>
                     New Night Sheet
@@ -155,6 +157,7 @@ export default {
             total: null,
             tasks: false,
             menu: false,
+            loading: false,
             nameRules: [
                 v => !!v || 'Name is required',
             ],
@@ -173,6 +176,7 @@ export default {
     },
     methods: {
         saveSheet () {
+            this.loading = true
             if(this.$refs.form.validate()){
                 db.collection("night-sheets").add({
                 Date: this.date,
@@ -184,6 +188,7 @@ export default {
                 Name: this.sheetName,
                 Tasks: this.tasks
                 })
+                this.loading = false
                 this.$router.push(`/list`)
             }
         }
