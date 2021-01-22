@@ -176,8 +176,8 @@ export default {
     },
     methods: {
         saveSheet () {
-            this.loading = true
             if(this.$refs.form.validate()){
+                this.loading = true
                 db.collection("night-sheets").add({
                 Date: this.date,
                 Day: this.day,
