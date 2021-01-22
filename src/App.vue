@@ -39,8 +39,8 @@
           class="white--text"
           color="white"
           outlined
-          placeholder="Notes"
-          background-color="blue-grey darken-2"
+          dark
+          background-color="blue-grey darken-3"
           no-resize
           rounded
           >
