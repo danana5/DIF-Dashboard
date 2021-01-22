@@ -14,16 +14,19 @@ Vue.use(Router);
 let router = new Router({
   routes: [
     {
-      path: "/login",
-      name: "login",
-      component: Login,
-    },
-    {
-      path: "/",
+      path: "/dash",
       name: "dashboard",
       component: Dashboard,
       meta: {
         requiresAuth: true,
+      },
+    },
+    {
+      path: "/",
+      name: "login",
+      component: Login,
+      meta: {
+        requiresGuest: true,
       },
     },
     {
@@ -73,7 +76,18 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!firebase.auth().currentUser) {
       next({
-        path: "/login",
+        path: "/",
+        query: {
+          redirect: to.fullPath,
+        },
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.requiresGuest)) {
+    if (firebase.auth().currentUser) {
+      next({
+        path: "/dash",
         query: {
           redirect: to.fullPath,
         },
