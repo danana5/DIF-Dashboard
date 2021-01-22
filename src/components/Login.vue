@@ -3,7 +3,9 @@
         <v-card
         class="mx-auto mt-10"
         max-width="600"
-        tile
+        :loading="loading"
+        :disabled="loading"
+        rounded
         >
             <v-container>
                 <form>
@@ -47,15 +49,18 @@ export default {
             email: "",
             password: "",
             show: false,
-            failed: false
+            failed: false,
+            loading: false,
         }
     },
     methods:{
         login(){
+            this.loading = true
             firebase.auth().signInWithEmailAndPassword(this.email, this.password)
             .then(user => {
                 console.log("Logged in as " + user.email)
                 this.$router.push("/dash")
+                this.loading = false
             },
             err => {
                 alert(err.message)
