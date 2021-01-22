@@ -118,7 +118,7 @@
                     outlined
                     rounded
                     text
-                    :to="`/`"
+                    :to="`/dash`"
                     >
                         Cancel
                     </v-btn>
