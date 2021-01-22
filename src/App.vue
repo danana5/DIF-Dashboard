@@ -32,6 +32,22 @@
         <v-divider>
         </v-divider>
         <v-list-item
+        class="mt-3">
+          <v-textarea
+          v-model="notes"
+          label="Notes"
+          class="white--text"
+          color="white"
+          outlined
+          placeholder="Notes"
+          background-color="blue-grey darken-2"
+          no-resize
+          rounded
+          >
+          </v-textarea>
+        </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item
         @click="logout"
         >
           <v-list-item-icon>
@@ -42,6 +58,17 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-footer
+      color="blue-grey darken-4"
+      >
+      <v-row
+      justify="center"
+      no-gutters
+      class="white--text"
+      >
+      <p>©{{new Date().getFullYear()}} Daniel Grace</p>
+      </v-row>
+    </v-footer>
     </v-navigation-drawer>
 
     <v-app-bar app color="blue darken-3" extended>
