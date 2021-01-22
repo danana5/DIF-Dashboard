@@ -41,7 +41,7 @@
                         <v-btn
                             text
                             color="primary"
-                            @click="$refs.menu.save(query)"
+                            @click="$refs.menu.save(query); submit()"
                         >
                             OK
                         </v-btn>
