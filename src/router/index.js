@@ -17,9 +17,6 @@ let router = new Router({
       path: "/login",
       name: "login",
       component: Login,
-      meta: {
-        requiresGuest: true,
-      },
     },
     {
       path: "/",
@@ -77,17 +74,6 @@ router.beforeEach((to, from, next) => {
     if (!firebase.auth().currentUser) {
       next({
         path: "/login",
-        query: {
-          redirect: to.fullPath,
-        },
-      });
-    } else {
-      next();
-    }
-  } else if (to.matched.some((record) => record.meta.requiresGuest)) {
-    if (firebase.auth().currentUser) {
-      next({
-        path: "/",
         query: {
           redirect: to.fullPath,
         },
