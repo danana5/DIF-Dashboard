@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" color="blue lighten-2" elevated="5" app>
+    <v-navigation-drawer v-model="drawer" color="blue lighten-2" app>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title white--text">
@@ -29,12 +29,25 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-divider>
+        </v-divider>
+        <v-list-item
+        @click="logout"
+        >
+          <v-list-item-icon>
+            <v-icon color="white">mdi-logout</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content class="white--text">
+            <v-list-item-title>Log Out</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="blue darken-3" extended >
+    <v-app-bar app color="blue darken-3" extended>
       <v-app-bar-nav-icon color="white" @click="drawer = !drawer" style="margin-top: 35px"></v-app-bar-nav-icon>
       <v-toolbar-title><router-link to="/"><img src="./assets/logo.png" alt="DIF Logo" height="90%" width="90%" style="margin-top: 30px"></router-link></v-toolbar-title>
+      <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
@@ -44,6 +57,7 @@
 </template>
 
 <script>
+import firebase from "firebase"
 export default {
   name: 'App',
 
@@ -58,6 +72,14 @@ export default {
           { title: 'Create Night Sheet', icon: 'mdi-clipboard-plus-outline', to: "/new" },
           { title: 'Search Night Sheets', icon: 'mdi-magnify', to: "/search" },
         ],
+    loggedIn:false,
   }),
+  methods:{
+    logout(){
+        firebase.auth().signOut().then(()=>{
+          this.$router.push(`/login`)
+        })
+    }
+  }
 };
 </script>
