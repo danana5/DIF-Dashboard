@@ -4,6 +4,7 @@
         class="mx-auto mt-10"
         max-width="1000"
         tile
+        :loading="loading"
         >
             <v-card-title>
                 {{date}}
@@ -120,9 +121,11 @@ export default {
             dayRules: [
                 v => !!v || 'Day is required',
             ],
+            loading:false,
         }
     },
     created(){
+        this.loading = true
         const sheetID = this.$route.params.sheet_id
         db.collection('night-sheets').doc(sheetID).get().then(doc => {                         
                 this.sheetName = doc.data().Name
@@ -131,10 +134,12 @@ export default {
                 this.notes = doc.data().Notes
                 this.cash = doc.data().Cash
                 this.card = doc.data().Card
+                this.loading = false
         })
     },
     methods:{
         updateSheet(){
+            this.loading=true
             const sheetID = this.$route.params.sheet_id
             db.collection('night-sheets').doc(sheetID).update({
                 Name: this.sheetName,
@@ -145,6 +150,7 @@ export default {
                 Total: parseInt(this.cash) + parseInt(this.card),
                 Notes: this.notes
             })
+            this.loading = false
             this.$router.push(`/` + sheetID)
         }
     }
