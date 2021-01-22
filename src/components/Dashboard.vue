@@ -6,7 +6,7 @@
       max-width="1000px"
       outlined
     >
-      <iframe title="skedda" src="https://indoorfootballireland.skedda.com/booking?embedded=true" style="width: 100%; height: 600px;"></iframe>
+      <iframe title="skedda" src="https://indoorfootballireland.skedda.com/booking?embedded=true" style="width: 100%; height: 600px"></iframe>
     </v-card>
   </v-container>
 
