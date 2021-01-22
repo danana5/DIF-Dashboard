@@ -4,6 +4,7 @@
         class="mx-auto mt-10"
         max-width="800"
         tile
+        :loading="loading"
         >
             <v-list>
                 <v-list-item>
@@ -34,10 +35,12 @@ export default {
     name: 'list-of-NightSheets',
     data () {
         return {
-            nightSheets: []
+            nightSheets: [],
+            loading: false,
         }
     },
     created () {
+        this.loading= true
         db.collection('night-sheets').orderBy("Date").limit(7).get().then(querySnapshot => {
             querySnapshot.forEach(doc =>{               
                 const data = {
@@ -48,6 +51,7 @@ export default {
                     'notes' : doc.data().Notes
                 }
                 this.nightSheets.push(data)
+                this.loading = false
             })
         })
     }
