@@ -4,6 +4,8 @@
         class="mx-auto mt-10"
         max-width="1000"
         tile
+        :disabled="loading"
+        :loading="loading"
         >
             <v-card-title>
                 {{sheet.date}}
@@ -104,6 +106,7 @@ export default {
                 id: '',
                 card: 0,
                 cash: 0,
+                loading: false,
                 total: 0,
                 tasks: false,
             },
@@ -111,6 +114,7 @@ export default {
         }
     },
     created () {
+        this.loading=true
         const sheetID = this.$route.params.sheet_id
 
         db.collection('night-sheets').doc(sheetID).get().then(doc => {                         
@@ -123,6 +127,7 @@ export default {
                 this.sheet.cash = doc.data().Cash
                 this.sheet.tasks = doc.data().Tasks
                 this.sheet.id = doc.id
+                this.loading = false
         })
     },
     methods:{
