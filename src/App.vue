@@ -6,6 +6,9 @@
           <v-list-item-title class="title white--text">
             DIF Dashboard
           </v-list-item-title>
+          <v-list-item-subtitle class="white--text">
+            {{new Date().toDateString()}}
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -74,7 +77,6 @@
     <v-app-bar app color="blue darken-3" extended>
       <v-app-bar-nav-icon color="white" @click="drawer = !drawer" style="margin-top: 35px"></v-app-bar-nav-icon>
       <v-toolbar-title><router-link to="/dash"><img src="./assets/logo.png" alt="DIF Logo" height="90%" width="90%" style="margin-top: 30px"></router-link></v-toolbar-title>
-      <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
