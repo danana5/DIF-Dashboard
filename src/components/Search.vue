@@ -114,7 +114,7 @@ export default {
     data () {
         return {
             query : null,
-            nightSheets : [],
+            nightSheets : new Map(),
             resultSheet : null,
             found : false,
             menu : false,
@@ -124,7 +124,7 @@ export default {
     },
     created () {
         db.collection('night-sheets').orderBy("Date").limit(7).get().then(querySnapshot => {
-            querySnapshot.forEach(doc =>{               
+            querySnapshot.forEach(doc =>{            
                 const data = {
                     'id': doc.id,
                     'name' : doc.data().Name,
@@ -134,24 +134,21 @@ export default {
                     'cash' : doc.data().Cash,
                     'card' : doc.data().Card,
                     'total' : doc.data().Total
-                }
-                this.nightSheets.push(data)
+                }   
+                this.nightSheets.set(doc.data().Date, data)
             })
         })
     },
     methods:{
         submit(){
+            console.log(this.nightSheets)
             this.found=false
             this.searchedQuery= this.query
             this.failed=false
             this.resultSheet = null
-            for(let i = 0; i < this.nightSheets.length; i++){
-                if(this.nightSheets[i].date == this.query){
-                    this.resultSheet = this.nightSheets[i]
-                }
-            }
-            if(this.resultSheet != null){
+            if(this.nightSheets.has(this.searchedQuery)){
                 this.found = true
+                this.resultSheet = this.nightSheets.get(this.searchedQuery)
             }
             else{
                 this.failed = true
