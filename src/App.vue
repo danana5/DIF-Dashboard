@@ -37,7 +37,6 @@
         <v-list-item
         class="mt-3">
           <v-textarea
-          v-model="notes"
           label="Notes"
           class="white--text"
           color="white"
