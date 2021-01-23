@@ -41,7 +41,7 @@ export default {
     },
     created () {
         this.loading= true
-        db.collection('night-sheets').orderBy("Date").limit(7).get().then(querySnapshot => {
+        db.collection('night-sheets').orderBy("Date", "desc").limit(7).get().then(querySnapshot => {
             querySnapshot.forEach(doc =>{               
                 const data = {
                     'id': doc.id,
