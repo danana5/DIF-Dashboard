@@ -10,10 +10,11 @@
       <v-card
         class="mx-auto"
         color="blue-grey lighten-2"
+        height="100%"
         max-width="100%"
       >
         <h2 class="white--text" style="text-align: center;">Skedda</h2>
-        <iframe title="skedda" src="https://indoorfootballireland.skedda.com/booking?embedded=true" style="width: 100%; height: 500px"></iframe>
+        <iframe title="skedda" src="https://indoorfootballireland.skedda.com/booking?embedded=true" style="width: 100%; height: 550px"></iframe>
       </v-card>
       <v-spacer/>
   </v-container>
