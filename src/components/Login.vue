@@ -26,8 +26,12 @@
                     :type="show ? 'text' : 'password'"
                     label="Password"
                     @click:append="show = !show"
-                    >
-                    </v-text-field>
+                    ></v-text-field>
+                    <v-checkbox
+                    v-checkbox
+                    v-model="rememberME"
+                    label="Stay Logged in?"
+                    ></v-checkbox>
                     <v-btn
                     class="white--text"
                     color="blue darken-3"
@@ -52,6 +56,7 @@ export default {
             email: "",
             password: "",
             show: false,
+            rememberME: false,
             failed: false,
             loading: false,
         }
@@ -59,15 +64,30 @@ export default {
     methods:{
         login(){
             this.loading = true
-            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-            .then(user => {
-                console.log("Logged in as " + user.email)
-                this.$router.push("/dash")
-                this.loading = false
-            },
-            err => {
-                alert(err.message)
-            })
+            if(this.rememberME){
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then(user => {
+                    console.log("Logged in as " + user.email)
+                    this.$router.push("/dash")
+                    this.loading = false
+                },
+                err => {
+                    alert(err.message)
+                })
+            }
+            else{
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then(user => {
+                    console.log("Logged in as " + user.email)
+                    this.$router.push("/dash")
+                    this.loading = false
+                },
+                err => {
+                    alert(err.message)
+                })
+            }
         }
     }
 }
