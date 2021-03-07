@@ -42,7 +42,7 @@ export default {
                             console.log("Logged in as " + user.email)
                             this.$router.push("/dash")
                             this.loading = false
-                            this.logged = true
+                            this.logged = false
                         },
                         err => {
                             alert(err.message)
@@ -55,7 +55,7 @@ export default {
                             console.log("Logged in as " + user.email)
                             this.$router.push("/dash")
                             this.loading = false
-                            this.logged = true
+                            this.logged = false
                         },
                         err => {
                             alert(err.message)
