@@ -19,7 +19,7 @@
 				{{ sheet.hours }}
 				<br />
 				<strong>Notes:</strong> {{ sheet.notes }} <br /><br />
-				<br /><br />
+				<br />
 				<strong>Incident/Report:</strong> {{ sheet.report }}<br /><br />
 				<v-spacer></v-spacer>
 				<strong>Cash Recieved:</strong> €{{ sheet.cash }}
