@@ -108,6 +108,11 @@
           icon: 'mdi-magnify',
           to: '/search',
         },
+        {
+          title: 'Party Sheets',
+          icon: 'mdi-party-popper',
+          to: '/parties',
+        },
       ],
       loggedIn: false,
     }),
