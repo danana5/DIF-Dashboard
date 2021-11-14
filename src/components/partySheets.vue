@@ -3,12 +3,14 @@
     <v-card class="mx-auto mt-10" max-width="1000">
       <v-container>
         <v-row class="mx-auto mt-3">
-          <h2 class="font-weight-regular mb-2 mt-2">Parties</h2>
+          <h2 class="font-weight-regular mb-2 mt-2">Party Managment</h2>
           <caption class="font-weight-light primary--text ml-3 mt-4">
             {{
               date
             }}
           </caption>
+          <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
           <v-spacer></v-spacer>
           <v-menu
             ref="menu"
@@ -27,12 +29,19 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="date" no-title scrollable>
+            <v-date-picker v-model="date" scrollable no-title>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false">
                 Cancel
               </v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(date)">
+              <v-btn
+                text
+                color="primary"
+                @click="
+                  $refs.menu.save(date);
+                  getParties();
+                "
+              >
                 OK
               </v-btn>
             </v-date-picker>
@@ -53,8 +62,15 @@
         :headers="headers"
         :loading="loading"
         :items="parties"
+        no-data-text="No Parties for That Date"
+        sort-by="time"
         hide-default-footer
       >
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn icon @click="deleteParty(item)" dense>
+            <v-icon color="error"> mdi-delete</v-icon>
+          </v-btn>
+        </template>
       </v-data-table>
     </v-card>
     <v-dialog v-model="dialog" max-width="600" persistent>
@@ -106,6 +122,12 @@
     data() {
       return {
         headers: [
+          {
+            text: 'Delete',
+            value: 'actions',
+            width: '7.5em',
+            sortable: false,
+          },
           { text: 'Time', value: 'time' },
           { text: 'Party Booking Name', value: 'bookingName' },
           { text: 'Birthday Child Name', value: 'childName' },
@@ -185,6 +207,12 @@
             });
           });
         this.loading = false;
+      },
+      deleteParty(party) {
+        db.collection('party-sheets')
+          .doc(party.id)
+          .delete();
+        this.getParties();
       },
     },
     created() {

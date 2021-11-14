@@ -49,8 +49,8 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-footer color="blue-grey darken-4" class="footer ml-9">
-        <p class="white--text">©{{ new Date().getFullYear() }} Daniel Grace</p>
+      <v-footer color="blue-grey darken-4" class="footer ml-11">
+        <p class="white--text">©{{ new Date().getFullYear() }} Dan Grace</p>
       </v-footer>
     </v-navigation-drawer>
 
@@ -109,7 +109,7 @@
           to: '/search',
         },
         {
-          title: 'Party Sheets',
+          title: 'Party Sheet Management',
           icon: 'mdi-party-popper',
           to: '/parties',
         },
