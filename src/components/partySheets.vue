@@ -6,7 +6,10 @@
           <h2 class="font-weight-regular mb-2 mt-2">Party Managment</h2>
           <caption class="font-weight-light primary--text ml-3 mt-4">
             {{
-              date
+              getDay(new Date(date).getDay())
+            }}
+            {{
+              niceDate(date)
             }}
           </caption>
           <v-spacer></v-spacer>
@@ -80,21 +83,18 @@
           <v-text-field v-model="newParty.time" label="Time"></v-text-field>
           <v-text-field
             v-model="newParty.bookingName"
-            label="Party Booking Name"
+            label="Party Reference"
           ></v-text-field>
           <v-text-field
             v-model="newParty.childName"
             label="Birthday Child Name"
-          ></v-text-field>
-          <v-text-field
-            v-model="newParty.package"
-            label="Package Type"
           ></v-text-field>
           <v-text-field v-model="newParty.ref" label="Referee"></v-text-field>
           <v-text-field
             v-model="newParty.host"
             label="Party Host"
           ></v-text-field>
+          <v-text-field v-model="newParty.notes" label="Notes"></v-text-field>
           <v-row class="mx-auto mb-2 mt-2">
             <v-spacer></v-spacer>
             <v-btn
@@ -129,11 +129,12 @@
             sortable: false,
           },
           { text: 'Time', value: 'time' },
-          { text: 'Party Booking Name', value: 'bookingName' },
+          { text: 'Party Reference', value: 'bookingName' },
           { text: 'Birthday Child Name', value: 'childName' },
-          { text: 'Package Type', value: 'package' },
+          //{ text: 'Package Type', value: 'package' },
           { text: 'Referee', value: 'ref' },
           { text: 'Party Host', value: 'host' },
+          { text: 'Notes', value: 'notes' },
         ],
         date: new Date().toISOString().substr(0, 10),
         parties: [],
@@ -147,6 +148,7 @@
           time: '',
           childName: '',
           package: '',
+          notes: '',
         },
       };
     },
@@ -160,6 +162,7 @@
           childName: this.newParty.childName,
           bookingName: this.newParty.bookingName,
           package: this.newParty.package,
+          notes: this.newParty.notes,
           date: this.date,
         });
         this.loading = false;
@@ -170,6 +173,7 @@
           time: '',
           childName: '',
           package: '',
+          notes: '',
           date: this.date,
         };
         this.getParties();
@@ -183,6 +187,7 @@
           time: '',
           childName: '',
           package: '',
+          notes: '',
           date: this.date,
         };
       },
@@ -201,6 +206,7 @@
                 childName: doc.data().childName,
                 package: doc.data().package,
                 ref: doc.data().ref,
+                notes: doc.data().notes,
                 host: doc.data().host,
               };
               this.parties.push(data);
@@ -213,6 +219,28 @@
           .doc(party.id)
           .delete();
         this.getParties();
+      },
+      getDay(day) {
+        switch (day) {
+          case 1:
+            return 'Monday';
+          case 2:
+            return 'Tuesday';
+          case 3:
+            return 'Wednesday';
+          case 4:
+            return 'Thursday';
+          case 5:
+            return 'Friday';
+          case 6:
+            return 'Saturday';
+          case 0:
+            return 'Sunday';
+        }
+      },
+      niceDate(date) {
+        var dateArray = date.split('-');
+        return dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
       },
     },
     created() {

@@ -30,7 +30,7 @@
           class="mx-auto"
           color="blue-grey lighten-2"
           height="100%"
-          max-width="100%"
+          max-width="50em"
         >
           <h2 class="white--text" style="text-align: center;">Parties</h2>
           <v-data-table
@@ -38,7 +38,7 @@
             :headers="headers"
             :loading="loading"
             :items="parties"
-            no-data-text="No Parties for That Date"
+            no-data-text="No Parties for Today"
             sort-by="time"
             hide-default-footer
           >
@@ -63,11 +63,12 @@
         date: new Date().toISOString().substring(0, 10),
         headers: [
           { text: 'Time', value: 'time' },
-          { text: 'Party Booking Name', value: 'bookingName' },
+          { text: 'Party Reference', value: 'bookingName' },
           { text: 'Birthday Child Name', value: 'childName' },
-          { text: 'Package Type', value: 'package' },
+          //{ text: 'Package Type', value: 'package' },
           { text: 'Referee', value: 'ref' },
           { text: 'Party Host', value: 'host' },
+          { text: 'Notes', value: 'notes' },
         ],
       };
     },
@@ -113,6 +114,7 @@
                 package: doc.data().package,
                 ref: doc.data().ref,
                 host: doc.data().host,
+                notes: doc.data().notes,
               };
               this.parties.push(data);
             });
