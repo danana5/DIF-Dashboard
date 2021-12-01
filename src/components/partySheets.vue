@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <v-card class="mx-auto mt-10" max-width="1000">
+    <v-card class="mx-auto mt-10" max-width="90em">
       <v-container>
         <v-row class="mx-auto mt-3">
-          <h2 class="font-weight-regular mb-2 mt-2">Party Managment</h2>
+          <h2 class="font-weight-regular mb-2 mt-2">Party Management</h2>
           <caption class="font-weight-light primary--text ml-3 mt-4">
             {{
               getDay(new Date(date).getDay())
@@ -73,6 +73,9 @@
           <v-btn icon @click="deleteParty(item)" dense>
             <v-icon color="error"> mdi-delete</v-icon>
           </v-btn>
+          <v-btn icon @click="editParty(item)" dense>
+            <v-icon color="yellow"> mdi-pencil</v-icon>
+          </v-btn>
         </template>
       </v-data-table>
     </v-card>
@@ -94,6 +97,15 @@
             v-model="newParty.host"
             label="Party Host"
           ></v-text-field>
+          <v-text-field v-model="newParty.food" label="Food"></v-text-field>
+          <v-text-field
+            v-model="newParty.cost"
+            label="Total Cost"
+          ></v-text-field>
+          <v-text-field
+            v-model="newParty.price"
+            label="Total Price"
+          ></v-text-field>
           <v-text-field v-model="newParty.notes" label="Notes"></v-text-field>
           <v-row class="mx-auto mb-2 mt-2">
             <v-spacer></v-spacer>
@@ -113,6 +125,52 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="editDialog" max-width="600" persistent>
+      <v-card>
+        <v-container>
+          <h1 class="font-weight-regular">Edit Party</h1>
+          <v-text-field v-model="newParty.time" label="Time"></v-text-field>
+          <v-text-field
+            v-model="newParty.bookingName"
+            label="Party Reference"
+          ></v-text-field>
+          <v-text-field
+            v-model="newParty.childName"
+            label="Birthday Child Name"
+          ></v-text-field>
+          <v-text-field v-model="newParty.ref" label="Referee"></v-text-field>
+          <v-text-field
+            v-model="newParty.host"
+            label="Party Host"
+          ></v-text-field>
+          <v-text-field v-model="newParty.food" label="Food"></v-text-field>
+          <v-text-field
+            v-model="newParty.cost"
+            label="Total Cost"
+          ></v-text-field>
+          <v-text-field
+            v-model="newParty.price"
+            label="Total Price"
+          ></v-text-field>
+          <v-text-field v-model="newParty.notes" label="Notes"></v-text-field>
+          <v-row class="mx-auto mb-2 mt-2">
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="cancel()"
+              text
+              outlined
+              rounded
+              color="error"
+              class="mr-1"
+              >Cancel</v-btn
+            >
+            <v-btn @click="updateParty()" text outlined rounded color="primary"
+              >Update</v-btn
+            >
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -123,9 +181,9 @@
       return {
         headers: [
           {
-            text: 'Delete',
+            text: 'Actions',
             value: 'actions',
-            width: '7.5em',
+            width: '10em',
             sortable: false,
           },
           { text: 'Time', value: 'time' },
@@ -134,12 +192,16 @@
           //{ text: 'Package Type', value: 'package' },
           { text: 'Referee', value: 'ref' },
           { text: 'Party Host', value: 'host' },
+          { text: 'Food', value: 'food' },
+          { text: 'Total Cost', value: 'cost' },
+          { text: 'Total Price', value: 'price' },
           { text: 'Notes', value: 'notes' },
         ],
         date: new Date().toISOString().substr(0, 10),
         parties: [],
         loading: false,
         menu: false,
+        editDialog: false,
         dialog: false,
         newParty: {
           bookingName: '',
@@ -149,6 +211,9 @@
           childName: '',
           package: '',
           notes: '',
+          price: '',
+          cost: '',
+          food: '',
         },
       };
     },
@@ -164,6 +229,9 @@
           package: this.newParty.package,
           notes: this.newParty.notes,
           date: this.date,
+          food: this.newParty.food,
+          cost: this.newParty.cost,
+          price: this.newParty.price,
         });
         this.loading = false;
         this.newParty = {
@@ -174,6 +242,9 @@
           childName: '',
           package: '',
           notes: '',
+          price: '',
+          cost: '',
+          food: '',
           date: this.date,
         };
         this.getParties();
@@ -188,6 +259,9 @@
           childName: '',
           package: '',
           notes: '',
+          price: '',
+          cost: '',
+          food: '',
           date: this.date,
         };
       },
@@ -208,6 +282,9 @@
                 ref: doc.data().ref,
                 notes: doc.data().notes,
                 host: doc.data().host,
+                food: doc.data().food,
+                cost: doc.data().cost,
+                price: doc.data().price,
               };
               this.parties.push(data);
             });
@@ -219,6 +296,43 @@
           .doc(party.id)
           .delete();
         this.getParties();
+      },
+      editParty(party) {
+        this.newParty = {
+          bookingName: party.bookingName,
+          ref: party.ref,
+          host: party.host,
+          time: party.time,
+          childName: party.childName,
+          package: party.package,
+          notes: party.notes,
+          price: party.price || '',
+          cost: party.cost || '',
+          food: party.food || '',
+          id: party.id,
+        };
+
+        this.editDialog = true;
+      },
+      updateParty() {
+        this.loading = true;
+        db.collection('party-sheets')
+          .doc(this.newParty.id)
+          .update({
+            bookingName: this.newParty.bookingName,
+            ref: this.newParty.ref,
+            host: this.newParty.host,
+            time: this.newParty.time,
+            childName: this.newParty.childName,
+            package: this.newParty.package,
+            notes: this.newParty.notes,
+            price: this.newParty.price,
+            cost: this.newParty.cost,
+            food: this.newParty.food,
+          });
+        this.loading = false;
+        this.getParties();
+        this.editDialog = false;
       },
       getDay(day) {
         switch (day) {
