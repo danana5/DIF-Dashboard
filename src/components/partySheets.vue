@@ -275,6 +275,7 @@
       },
       cancel() {
         this.dialog = false;
+        this.editDialog = false;
         this.newParty = {
           bookingName: '',
           ref: '',
