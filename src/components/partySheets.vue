@@ -97,14 +97,22 @@
             v-model="newParty.host"
             label="Party Host"
           ></v-text-field>
-          <v-text-field v-model="newParty.food" label="Food"></v-text-field>
           <v-text-field
-            v-model="newParty.cost"
-            label="Total Cost"
+            v-model="newParty.food"
+            label="Food Ordered"
           ></v-text-field>
           <v-text-field
-            v-model="newParty.price"
-            label="Total Price"
+            v-model="newParty.allergy"
+            label="Allergy/Requests"
+          ></v-text-field>
+          <v-text-field
+            v-model="newParty.cost"
+            label="Final Cost"
+          ></v-text-field>
+          <v-text-field v-model="newParty.price" label="Payment"></v-text-field>
+          <v-text-field
+            v-model="newParty.waiver"
+            label="Waivers"
           ></v-text-field>
           <v-text-field v-model="newParty.notes" label="Notes"></v-text-field>
           <v-row class="mx-auto mb-2 mt-2">
@@ -143,14 +151,22 @@
             v-model="newParty.host"
             label="Party Host"
           ></v-text-field>
-          <v-text-field v-model="newParty.food" label="Food"></v-text-field>
           <v-text-field
-            v-model="newParty.cost"
-            label="Total Cost"
+            v-model="newParty.food"
+            label="Food Ordered"
           ></v-text-field>
           <v-text-field
-            v-model="newParty.price"
-            label="Total Price"
+            v-model="newParty.allergy"
+            label="Allergy/Requests"
+          ></v-text-field>
+          <v-text-field
+            v-model="newParty.cost"
+            label="Final Cost"
+          ></v-text-field>
+          <v-text-field v-model="newParty.price" label="Payment"></v-text-field>
+          <v-text-field
+            v-model="newParty.waiver"
+            label="Waivers"
           ></v-text-field>
           <v-text-field v-model="newParty.notes" label="Notes"></v-text-field>
           <v-row class="mx-auto mb-2 mt-2">
@@ -192,9 +208,11 @@
           //{ text: 'Package Type', value: 'package' },
           { text: 'Referee', value: 'ref' },
           { text: 'Party Host', value: 'host' },
-          { text: 'Food', value: 'food' },
-          { text: 'Total Cost', value: 'cost' },
-          { text: 'Total Price', value: 'price' },
+          { text: 'Food Ordered', value: 'food' },
+          { text: 'Allergy/Requests', value: 'allergy' },
+          { text: 'Final Cost', value: 'cost' },
+          { text: 'Payment', value: 'price' },
+          { text: 'Waivers', value: 'waiver' },
           { text: 'Notes', value: 'notes' },
         ],
         date: new Date().toISOString().substr(0, 10),
@@ -212,7 +230,9 @@
           package: '',
           notes: '',
           price: '',
+          allergy: '',
           cost: '',
+          waiver: '',
           food: '',
         },
       };
@@ -228,8 +248,10 @@
           bookingName: this.newParty.bookingName,
           package: this.newParty.package,
           notes: this.newParty.notes,
+          allergy: this.newParty.allergy,
           date: this.date,
           food: this.newParty.food,
+          waiver: this.newParty.waiver,
           cost: this.newParty.cost,
           price: this.newParty.price,
         });
@@ -243,7 +265,9 @@
           package: '',
           notes: '',
           price: '',
+          allergy: '',
           cost: '',
+          waiver: '',
           food: '',
           date: this.date,
         };
@@ -261,6 +285,7 @@
           notes: '',
           price: '',
           cost: '',
+          waiver: '',
           food: '',
           date: this.date,
         };
@@ -283,8 +308,10 @@
                 notes: doc.data().notes,
                 host: doc.data().host,
                 food: doc.data().food,
+                allergy: doc.data().allergy,
                 cost: doc.data().cost,
                 price: doc.data().price,
+                waiver: doc.data().waiver,
               };
               this.parties.push(data);
             });
@@ -309,6 +336,8 @@
           price: party.price || '',
           cost: party.cost || '',
           food: party.food || '',
+          waiver: party.waiver || '',
+          allergy: party.allergy || '',
           id: party.id,
         };
 
@@ -328,6 +357,8 @@
             notes: this.newParty.notes,
             price: this.newParty.price,
             cost: this.newParty.cost,
+            allergy: this.newParty.allergy,
+            waiver: this.newParty.waiver,
             food: this.newParty.food,
           });
         this.loading = false;
