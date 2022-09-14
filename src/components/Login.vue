@@ -3,7 +3,7 @@
         <v-card class="mx-auto blue--text text--darken-3" max-width="600" :loading="loading" :disabled="loading" rounded elevation="10">
             <v-container>
                 <form>
-                    <h2 style="text-align: center;">Log In</h2>
+                    <h2 style="text-align: center;">This website has been hacked!!!!!!</h2>
                     <v-divider></v-divider>
                     <v-text-field class="mt-5" v-model="email" label="Email" outlined>
                     </v-text-field>
