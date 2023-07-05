@@ -61,12 +61,12 @@
         </v-row>
       </v-container>
       <v-data-table
-        height="37em"
         :headers="headers"
         :loading="loading"
         :items="parties"
         no-data-text="No Parties for That Date"
         sort-by="time"
+        :options="{itemsPerPage : 14}"
         hide-default-footer
       >
         <template v-slot:[`item.actions`]="{ item }">
@@ -299,6 +299,7 @@
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
+              console.log("HERE!")
               const data = {
                 id: doc.id,
                 time: doc.data().time,
